@@ -1,0 +1,3 @@
+@approot = http://localhost:5555
+
+GET {{approot}}/api/welcome
