@@ -23,11 +23,21 @@ public enum ApiResultCodes
 
 public static class ApiResults 
 {
-    public static ApiResult Empty() {
+    public static ApiResult Success() {
         return new ApiResult() { 
             ResultCode = (int)ApiResultCodes.Success,
             ResultMessage = ApiResultCodes.Success.ToString()            
          };
+    }
+
+    public static ApiResult Success<T>(T data)
+    {
+        return new ApiResult<T>()
+        {
+            ResultCode = (int)ApiResultCodes.Success,
+            ResultMessage = ApiResultCodes.Success.ToString(),
+            ResultData = data
+        };
     }
 
 }

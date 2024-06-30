@@ -1,0 +1,13 @@
+{
+  "Application": {
+
+  },
+  "Database": {
+
+  },
+  "JWT": {
+    "SecurityKey": "0123456789ABCDEF",
+    "Issuer":"NetAnd",
+    "Audience": "*"
+  }
+}

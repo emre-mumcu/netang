@@ -1,6 +1,11 @@
+using System.Security.Cryptography;
+using System.Text;
+using Backend;
 using log4net;
 using log4net.Config;
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+// dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
 XmlConfigurator.Configure(new FileInfo("log4net.config"));
 
 ILog log4netLogger = LogManager.GetLogger(typeof(Program));
@@ -13,13 +18,40 @@ try
 
     builder.Services.AddControllers();
 
+    builder.Services.AddScoped<ITokenService, TokenService>();
+
+    builder.Services.AddAuthentication(opt =>
+    {
+        opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = MyConfigurationManager.Data["JWT:Issuer"],
+            ValidAudience = MyConfigurationManager.Data["JWT:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(SHA512.Create().ComputeHash(Encoding.UTF8.GetBytes(MyConfigurationManager.Data["JWT:SecurityKey"]!)))
+        };
+    });
+
     var app = builder.Build();
 
     app.UseHsts();
 
     app.UseHttpsRedirection();
 
+    app.UseAuthentication();
+
+    app.UseAuthorization();
+
     app.MapControllers();
+
+    app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
     app.Run();
 
