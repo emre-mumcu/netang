@@ -1,13 +1,15 @@
 ﻿namespace Backend;
 
-public class MyConfigurationManager
+/// <summary>
+/// Application Configuration Manager
+/// </summary>
+public class CM
 {
-    public static IConfiguration Data
+    public static IConfiguration DataConfiguration { get; }
+
+    static CM()
     {
-        get;
-    }
-    static MyConfigurationManager()
-    {
-        Data = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("data.json").Build();
+        
+        DataConfiguration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("data.json").Build();
     }
 }

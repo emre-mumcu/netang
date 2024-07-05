@@ -54,3 +54,8 @@ GET {{approot}}/api/token/create HTTP/1.1
 GET {{approot}}/api/admin HTTP/1.1
 Authorization: bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwiZ2l2ZW5fbmFtZSI6IkVtcmUiLCJuYmYiOjE3MTk3Mzc0MzUsImV4cCI6MTcyMDM0MjIzNSwiaWF0IjoxNzE5NzM3NDM1LCJpc3MiOiJOZXRBbmQiLCJhdWQiOiIqIn0.xhGCwYKrl9HshgQImL7YqJ7Mj3yuLpGS1iFoNh6K1w7oC97nvhWgljGXutuxBSD4SFxMJyYZIl-Q47F2jOxvDg
 ###
+
+
+
+authorization: Basic someuser somekey
+content-type: application/x-www-form-urlencoded

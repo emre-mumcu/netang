@@ -40,4 +40,14 @@ public static class ApiResults
         };
     }
 
+    public static ApiResult Error(string message)
+    {
+        return new ApiResult()
+        {
+            ResultCode = (int)ApiResultCodes.Success,
+            ResultMessage = ApiResultCodes.Success.ToString(),
+            ResultData = message
+        };
+    }
+
 }

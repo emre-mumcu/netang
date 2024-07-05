@@ -1,6 +1,8 @@
 using System.Security.Cryptography;
 using System.Text;
 using Backend;
+using Backend.AppLib.Contracts;
+using Backend.AppLib.Services;
 using log4net;
 using log4net.Config;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -33,9 +35,9 @@ try
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = MyConfigurationManager.Data["JWT:Issuer"],
-            ValidAudience = MyConfigurationManager.Data["JWT:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(SHA512.Create().ComputeHash(Encoding.UTF8.GetBytes(MyConfigurationManager.Data["JWT:SecurityKey"]!)))
+            ValidIssuer = CM.DataConfiguration["JWT:Issuer"],
+            ValidAudience = CM.DataConfiguration["JWT:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(SHA512.Create().ComputeHash(Encoding.UTF8.GetBytes(CM.DataConfiguration["JWT:SecurityKey"]!)))
         };
     });
 

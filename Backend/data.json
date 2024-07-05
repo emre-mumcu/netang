@@ -5,6 +5,14 @@
   "Database": {
 
   },
+  "TokenParameters": {
+    "Issuer":"emre-mumcu",
+    "Audience":"*",
+    "Timeout":20,
+    "SignKey":"0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF",
+    "EncryptKey":"0123456789ABCDEF",
+    "ClockSkew": 1
+  },
   "JWT": {
     "SecurityKey": "0123456789ABCDEF",
     "Issuer":"NetAnd",
