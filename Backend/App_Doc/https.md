@@ -1,3 +1,30 @@
+# Running NET Application over https
+
+Edit the launcgSettings.json file in Properties folder as follows:
+
+```json
+{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "http": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": false,
+      "launchUrl": "api/welcome",
+      "applicationUrl": "http://localhost:5000;https://localhost:5001",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
+```
+If the certificate trust error is shown, you can run the following command to fix it:
+
+```zsh
+% dotnet dev-certs https --trust
+```
+
 # Running Angular Application over https
 
 Using mkcert to create self-signed certificates to use for https.
