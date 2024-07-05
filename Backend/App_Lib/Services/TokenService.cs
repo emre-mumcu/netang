@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using Backend.App_Lib.Configuration;
 using Backend.AppLib.Contracts;
 using Backend.AppLib.Extensions;
 using Microsoft.IdentityModel.Tokens;
@@ -27,7 +28,7 @@ public partial class TokenService : ITokenService
     private SigningCredentials GetSigningCredentials()
     {
         SigningCredentials signingCredentials = new SigningCredentials(
-            key: GetSecurityKey(CM.DataConfiguration["TokenParameters:SignKey"]!),
+            key: GetSecurityKey(AppConfig.Instance.DataConfiguration["TokenParameters:SignKey"]!),
             algorithm: SecurityAlgorithms.HmacSha512Signature
         );
 
@@ -36,7 +37,7 @@ public partial class TokenService : ITokenService
 
     private EncryptingCredentials GetEncryptingCredentials()
     {
-        SecurityKey securityKey = GetSecurityKey(CM.DataConfiguration["TokenParameters:EncryptKey"]!);
+        SecurityKey securityKey = GetSecurityKey(AppConfig.Instance.DataConfiguration["TokenParameters:EncryptKey"]!);
 
         var (al, en) = securityKey.KeySize switch
         {
@@ -56,9 +57,9 @@ public partial class TokenService : ITokenService
             IssuedAt = DateTime.UtcNow,
             NotBefore = DateTime.UtcNow,
             Subject = subject,
-            Expires = DateTime.UtcNow.AddMinutes(CM.DataConfiguration["TokenParameters:Timeout"]!.ToDouble()),
-            Issuer = CM.DataConfiguration["TokenParameters:Issuer"],
-            Audience = CM.DataConfiguration["TokenParameters:Audience"],
+            Expires = DateTime.UtcNow.AddMinutes(AppConfig.Instance.DataConfiguration["TokenParameters:Timeout"]!.ToDouble()),
+            Issuer = AppConfig.Instance.DataConfiguration["TokenParameters:Issuer"],
+            Audience = AppConfig.Instance.DataConfiguration["TokenParameters:Audience"],
             SigningCredentials = GetSigningCredentials()
         };
     }
@@ -80,17 +81,17 @@ public partial class TokenService : ITokenService
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateLifetime = true,
-            ValidIssuer = CM.DataConfiguration["TokenParameters:Issuer"],
-            ValidAudience = CM.DataConfiguration["TokenParameters:Audience"],
-            IssuerSigningKey = GetSecurityKey(CM.DataConfiguration["TokenParameters:SignKey"]!),
-            ClockSkew = TimeSpan.FromMinutes(CM.DataConfiguration["TokenParameters:ClockSkew"]!.ToDouble())
+            ValidIssuer = AppConfig.Instance.DataConfiguration["TokenParameters:Issuer"],
+            ValidAudience = AppConfig.Instance.DataConfiguration["TokenParameters:Audience"],
+            IssuerSigningKey = GetSecurityKey(AppConfig.Instance.DataConfiguration["TokenParameters:SignKey"]!),
+            ClockSkew = TimeSpan.FromMinutes(AppConfig.Instance.DataConfiguration["TokenParameters:ClockSkew"]!.ToDouble())
         };
     }
 
     private TokenValidationParameters GetTokenValidationParametersEncrypted()
     {
         TokenValidationParameters tokenValidationParameters = GetTokenValidationParameters();
-        tokenValidationParameters.TokenDecryptionKey = GetSecurityKey(CM.DataConfiguration["TokenParameters:EncryptKey"]!);
+        tokenValidationParameters.TokenDecryptionKey = GetSecurityKey(AppConfig.Instance.DataConfiguration["TokenParameters:EncryptKey"]!);
         return tokenValidationParameters;
     }
 

@@ -1,53 +1,64 @@
-﻿namespace Backend;
+﻿using System.Net;
 
-public class ApiResult<T> : ApiResult
+namespace Backend;
+
+public class ApiResponse<T> : ApiResponse
 {
-    public new T? ResultData { get; set; }
+    public new T? ResponseData { get; set; }
 }
 
-public class ApiResult
+public class ApiResponse
 {
-    public int ResultCode { get; set; }
-    public string ResultMessage { get; set; } = null!;
-    public string? ResultData { get; set; } = null;
+    public int ResponseCode { get; set; }
+    public string ResponseType { get; set; } = null!;
+    public string ResponseMessage { get; set; } = null!;
+    public string? ResponseData { get; set; } = null;
     public string? TraceId { get; set; } = null;
     public DateTime TimeStamp { get; set; } = DateTime.Now;
 }
 
-public enum ApiResultCodes 
+public enum ApiResponseCodes 
 {
-    Success = 0, 
-    Fail = 1
+    Success=0, Fail=1, Exception=2
 }
 
 
-public static class ApiResults 
+public static class ApiResponses 
 {
-    public static ApiResult Success() {
-        return new ApiResult() { 
-            ResultCode = (int)ApiResultCodes.Success,
-            ResultMessage = ApiResultCodes.Success.ToString()            
-         };
-    }
+    public static ApiResponse Success() => new ApiResponse() { 
+        ResponseCode = (int)ApiResponseCodes.Success,  
+        ResponseType = ApiResponseCodes.Success.ToString().ToUpper(),
+        ResponseMessage = "Operation completed"
+    };
 
-    public static ApiResult Success<T>(T data)
+    public static ApiResponse Success<T>(T? data)
     {
-        return new ApiResult<T>()
+        return new ApiResponse<T>()
         {
-            ResultCode = (int)ApiResultCodes.Success,
-            ResultMessage = ApiResultCodes.Success.ToString(),
-            ResultData = data
+            ResponseCode = (int)ApiResponseCodes.Success,
+            ResponseType = ApiResponseCodes.Success.ToString().ToUpper(),
+            ResponseMessage = "Operation completed",
+            ResponseData = data
         };
     }
 
-    public static ApiResult Error(string message)
+    public static ApiResponse Fail(string Message)
     {
-        return new ApiResult()
+        return new ApiResponse()
         {
-            ResultCode = (int)ApiResultCodes.Success,
-            ResultMessage = ApiResultCodes.Success.ToString(),
-            ResultData = message
+            ResponseCode = (int)ApiResponseCodes.Fail,
+            ResponseType = ApiResponseCodes.Fail.ToString().ToUpper(),
+            ResponseMessage = Message            
         };
     }
 
+    public static ApiResponse Exception(Exception ex)
+    {
+        return new ApiResponse()
+        {
+            ResponseCode = (int)ApiResponseCodes.Exception,
+            ResponseType = ApiResponseCodes.Exception.ToString().ToUpper(),
+            ResponseMessage = ex.Message
+        };
+    }
 }

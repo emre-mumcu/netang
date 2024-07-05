@@ -25,7 +25,7 @@ public class TokenController : MyControllerBase
 
         string token = _tokenService.CreateToken(new ClaimsIdentity(userClaims));
 
-        return Ok(ApiResults.Success(token));
+        return Ok(ApiResponses.Success(token));
     }
 
     [HttpPost("[action]")]
@@ -37,8 +37,8 @@ public class TokenController : MyControllerBase
 
         bool result = _tokenService.ValidateToken(Token, out message, out token);
 
-        if(result) return Ok(ApiResults.Success(token));
-        else return Ok(ApiResults.Error(message));
+        if(result) return Ok(ApiResponses.Success(token));
+        else return Ok(ApiResponses.Fail(message));
     }
 
     [HttpGet("[action]")]
@@ -51,7 +51,7 @@ public class TokenController : MyControllerBase
 
         string token = _tokenService.CreateTokenEncrypted(new ClaimsIdentity(userClaims));
 
-        return Ok(ApiResults.Success(token));
+        return Ok(ApiResponses.Success(token));
     }
 
     [HttpPost("[action]")]
@@ -63,7 +63,7 @@ public class TokenController : MyControllerBase
 
         bool result = _tokenService.ValidateTokenEncrypted(Token, out message, out token);
 
-        if (result) return Ok(ApiResults.Success(token));
+        if (result) return Ok(ApiResponses.Success(token));
         else return BadRequest();
     }
 }
