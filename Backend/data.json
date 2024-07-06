@@ -3,7 +3,7 @@
 
   },
   "Database": {
-
+    "ConnectionString":"Data Source = NetAng.db"
   },
   "TokenParameters": {
     "Issuer":"emre-mumcu",

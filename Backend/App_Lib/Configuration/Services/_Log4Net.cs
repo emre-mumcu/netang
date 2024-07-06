@@ -1,16 +1,20 @@
 ﻿using log4net;
 using log4net.Config;
+using log4net.Repository;
 
 namespace Backend.App_Lib.Configuration.Services;
 
 public static class _Log4Net
 {
-    public static IServiceCollection _AddLog4Net(this IServiceCollection services)
+    public static WebApplicationBuilder _AddLog4Net(this WebApplicationBuilder builder)
     {
-        XmlConfigurator.Configure(new FileInfo("log4net.config"));
+        // ILoggerRepository? logRepository = LogManager.GetRepository(System.Reflection.Assembly.GetEntryAssembly());
 
-        services.AddSingleton(LogManager.GetLogger(typeof(Program)));
+        // XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
 
-        return services;
+        // builder.Logging.ClearProviders();
+        builder.Logging.AddLog4Net("log4net.config");
+
+        return builder;
     }
 }

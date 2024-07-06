@@ -7,56 +7,16 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Backend;
 
-public class Sample {
-    public int MyProperty1 { get; set; } 
-    public string? MyProperty2 { get; set; }
-    public DateTime MyProperty3 { get; set; }
-
-    public static Sample Instance()
-    {
-        Sample s = new Sample();
-
-        s.MyProperty1 = 100;
-        s.MyProperty2 = "Deneme 123";
-        s.MyProperty3 = DateTime.Now;
-
-        return s;
-
-    }
-}
-
 public class TokenController : MyControllerBase
 {
-
-
-    [HttpGet("[action]")]
-    public IActionResult action1()
-    {
-        return Ok(Sample.Instance());
-    }
-
-    [HttpGet("[action]")]
-    public IActionResult action2()
-    {
-        return BadRequest(Sample.Instance());
-    }
-
-    [HttpGet("[action]")]
-    public IResult action3()
-    {
-        return Results.Json(Sample.Instance());
-    }
-
-    [HttpGet("[action]")]
-    public IActionResult action4()
-    {
-        return new JsonResult(Sample.Instance());
-    }
-
-
     private readonly ITokenService _tokenService;
+    private readonly ILogger<TokenController> _logger;
 
-    public TokenController(ITokenService tokenService) { _tokenService = tokenService; }
+    public TokenController(ITokenService tokenService, ILogger<TokenController> logger)
+    {
+        _tokenService = tokenService;
+        _logger = logger;
+    }
 
     [HttpGet("[action]")]
     public IActionResult Create()
@@ -68,8 +28,9 @@ public class TokenController : MyControllerBase
 
         string token = _tokenService.CreateToken(new ClaimsIdentity(userClaims));
 
+        _logger.LogInformation("Token Created");
 
-        return  Ok(ApiResponses.Success(token));
+        return Ok(ApiResponses.Success(token));
     }
 
     [HttpPost("[action]")]
