@@ -4,7 +4,7 @@ using Backend.App_Lib.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Backend;
+namespace Backend.App_Lib.Configuration.Services;
 
 public static class _Authentication
 {

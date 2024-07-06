@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace Backend;
+namespace Backend.App_Lib;
 
 public class ApiResponse<T> : ApiResponse
 {

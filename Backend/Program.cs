@@ -1,15 +1,11 @@
-using System.Text.Json;
-using Backend;
 using Backend.App_Lib.Configuration.Extensions;
+
+// https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis?view=aspnetcore-8.0
 
 try
 {
-throw new Exception("hehe");
-
     var builder = await WebApplication.CreateBuilder(args)._ConfigureServicesAsync();
-
     var app = await builder.Build()._ConfigureAsync();
-
     app.Run();
 }
 catch (Exception ex)
@@ -22,7 +18,7 @@ catch (Exception ex)
         {
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsJsonAsync(ApiResponses.Exception(ex));
+                await context.Response.WriteAsJsonAsync(Backend.App_Lib.ApiResponses.Exception(ex));
             });
         });
     }).Build().Run();

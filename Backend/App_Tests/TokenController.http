@@ -1,4 +1,4 @@
-@approot = http://localhost:5555
+@approot = https://localhost:5001
 
 GET {{approot}}/api/token/create HTTP/1.1
 ###
@@ -20,4 +20,19 @@ POST {{approot}}/api/token/validateencrypted
 Content-Type: application/x-www-form-urlencoded
 
 token=eyJhbGciOiJBMTI4S1ciLCJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwidHlwIjoiSldUIiwiY3R5IjoiSldUIn0.PR8mTHXsZYSQ6gulsvB1cLTYsaCTn2vRdjYKab_jaWq-vs-B0VCYog.lcnCemEmYIZoc74A4Jerag.x4zfRyIq_PvF7xz53p_PliLMfedZj5gtkVN5PGzFM-rftEW-Sq0SoMEeKOLw7YoHY_LabNUs-cSwp8SG_KeQWLTxljpRWew3bAMFbNfuwzY4o9xemlynZqWjltZaYGBJP9jUIM5gj-v93pcsmqXNopST3doZKbP2zSewmIRg6YZYNgjFK2Gi1niGdRjcI1gzhe3caCVWKCYn6_3HxeKnnNZ135y6uYlBlsG2UMsl4HUwgOnyZN9qrxcvJ6RK96n5bzRdl_cpLK6W_ppEIeOlM-JB0LwjCCDwL69iBN6FoUhvc29ZyhjQbADpO2ACiORr_ToER8fs9jLGY2vcg-O5q9p8Yy0ysoVZ1jmMyNsJs_-0wNg7BJjRppkdFwgXuZ5Q2i36nkrPQl0vSLoHFM36MQ.gBh_STbpsZ_S16JG7Ki9RQ
+###
+
+
+
+
+GET {{approot}}/api/token/action1 HTTP/1.1
+###
+
+GET {{approot}}/api/token/action2 HTTP/1.1
+###
+
+GET {{approot}}/api/token/action3 HTTP/1.1
+###
+
+GET {{approot}}/api/token/action4 HTTP/1.1
 ###
