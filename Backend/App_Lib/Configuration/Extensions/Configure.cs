@@ -23,6 +23,8 @@ public static class Configure
 
         app.MapGet("/", async (context) => await context.Response.WriteAsJsonAsync(ApiResponses.Success("Welcome to NetAng Service")));
 
+        await Task.FromResult(0);
+
         return app;
     }
 }

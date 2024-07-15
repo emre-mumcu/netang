@@ -16,6 +16,8 @@ public static class ConfigureServices
 
         builder._AddLog4Net();
 
+        await Task.FromResult(0);
+
         return builder;
     }
 }

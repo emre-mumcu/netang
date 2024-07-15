@@ -8,13 +8,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Backend.App_Data.Configurations
 {
-    public class TraceConfig : IEntityTypeConfiguration<TraceEntity>
+    public class TraceConfig : IEntityTypeConfiguration<Trace>
     {
-        public void Configure(EntityTypeBuilder<TraceEntity> builder)
+        public void Configure(EntityTypeBuilder<Trace> builder)
         {
-            builder.Property(p => p.TraceID).IsRequired();
-            builder.HasIndex(e => e.TraceID).IsUnique(true);            
-            builder.Property(i => i.TraceID).HasColumnType("text").HasMaxLength(36);
+            builder.Property(p => p.TraceIdentifier).IsRequired();
+            builder.HasIndex(e => e.TraceIdentifier).IsUnique(true);            
+            builder.Property(i => i.TraceIdentifier).HasColumnType("text").HasMaxLength(36);
         }
     }
 }

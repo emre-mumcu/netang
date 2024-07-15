@@ -30,23 +30,16 @@ public partial class AppDbContext : DbContext
 
         modelBuilder.ApplyConfigurationsFromAssembly(System.Reflection.Assembly.GetExecutingAssembly());
 
+        if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+        {
+            modelBuilder.SeedData();
+        }
+
         // In order to seed the data by this way, migrations (add migration and update database) must be run
         // modelBuilder.SeedData();
     }
 
-    public virtual DbSet<TraceEntity> Traces => Set<TraceEntity>();
+    public virtual DbSet<Trace> Traces => Set<Trace>();
+    public virtual DbSet<State> States => Set<State>();
+    public virtual DbSet<City> Cities => Set<City>();
 }
-
-
-/*
-Steps for using encrypted SQLite database in your .Net application with EFCore
-This example is using .Net Core 3.1 with EFCore 3.1.6 and SQLCipher 2.0.3:
-
-Add a NuGET reference to Microsoft.EntityFrameworkCore in your project
-Add a NuGET reference to Microsoft.EntityFrameworkCore.Design in your project
-Add a NuGET reference to Microsoft.EntityFrameworkCore.Sqlite.Core in your project This is a really important step: DO NOT add a reference to Microsoft.EntityFrameworkCore.Sqlite, otherwise it will not work!
-Add a NuGET reference to SQLitePCLRaw.bundle_e_sqlcipher
-Create a connection object (SqliteConnection), defining the database access password in the connection string (you can use SqliteConnectionStringBuilder) you give to the constructor
-Give the connection object to the UseSqlite method, when configuring the database context
-
-*/
