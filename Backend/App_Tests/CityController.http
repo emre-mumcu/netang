@@ -1,0 +1,10 @@
+@approot = https://localhost:5001
+
+GET {{approot}}/api/city/getstates HTTP/1.1
+###
+
+GET {{approot}}/api/city/getcities HTTP/1.1
+###
+
+GET {{approot}}/api/city/GetCitiesByStateId/2 HTTP/1.1
+###

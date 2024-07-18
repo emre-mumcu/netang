@@ -15,6 +15,7 @@ public class ApiResponse
     public string? ResponseData { get; set; } = null;
     public string? TraceId { get; set; } = null;
     public DateTime TimeStamp { get; set; } = DateTime.Now;
+    public long ExecutionTime { get; set; }
 }
 
 public enum ApiResponseCodes 
@@ -31,14 +32,15 @@ public static class ApiResponses
         ResponseMessage = "Operation completed"
     };
 
-    public static ApiResponse Success<T>(T? data)
+    public static ApiResponse Success<T>(T? data, long executionTime = 0)
     {
         return new ApiResponse<T>()
         {
             ResponseCode = (int)ApiResponseCodes.Success,
             ResponseType = ApiResponseCodes.Success.ToString().ToUpper(),
             ResponseMessage = "Operation completed",
-            ResponseData = data
+            ResponseData = data,
+            ExecutionTime = executionTime
         };
     }
 
