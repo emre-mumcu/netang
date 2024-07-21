@@ -20,7 +20,7 @@ public static class _Init
          .AddJsonOptions(options =>
          {
              options.JsonSerializerOptions.PropertyNamingPolicy = null;
-             options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+             options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.Never;
              options.JsonSerializerOptions.PropertyNameCaseInsensitive = false;
              options.JsonSerializerOptions.WriteIndented = true;
 
@@ -31,7 +31,7 @@ public static class _Init
         .AddNewtonsoftJson(options =>
         {
             options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+            options.SerializerSettings.NullValueHandling = NullValueHandling.Include;
             options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             options.SerializerSettings.Formatting = Formatting.Indented;
             options.SerializerSettings.Converters.Add(new StringEnumConverter(new CamelCaseNamingStrategy()));

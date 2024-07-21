@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace Backend.App_Lib;
+namespace Backend.App_Lib.Common;
 
 public class ApiResponse<T> : ApiResponse
 {
@@ -13,6 +13,8 @@ public class ApiResponse
     public string ResponseType { get; set; } = null!;
     public string ResponseMessage { get; set; } = null!;
     public string? ResponseData { get; set; } = null;
+    public string? Exception { get; set; } = null;
+    public string? InnerException { get; set; } = null;
     public string? TraceId { get; set; } = null;
     public DateTime TimeStamp { get; set; } = DateTime.Now;
     public long ExecutionTime { get; set; }
@@ -20,7 +22,12 @@ public class ApiResponse
 
 public enum ApiResponseCodes 
 {
-    Success=0, Fail=1, Exception=2
+    // Operation completed.
+    Success=0, 
+    // Operation is NOT completed due to user request.
+    Fail=1, 
+    // Operation is NOT completed due to application error.
+    Exception=2
 }
 
 
@@ -32,7 +39,7 @@ public static class ApiResponses
         ResponseMessage = "Operation completed"
     };
 
-    public static ApiResponse Success<T>(T? data, long executionTime = 0)
+    public static ApiResponse<T> Success<T>(T? data, long executionTime = 0)
     {
         return new ApiResponse<T>()
         {
@@ -60,7 +67,22 @@ public static class ApiResponses
         {
             ResponseCode = (int)ApiResponseCodes.Exception,
             ResponseType = ApiResponseCodes.Exception.ToString().ToUpper(),
-            ResponseMessage = ex.Message
+            ResponseMessage = "An error occured",
+            Exception = ex?.Message,
+            InnerException = ex?.InnerException?.Message
+        };
+    }
+
+    public static ApiResponse<T> Exception<T>(Exception ex)
+    {
+        return new ApiResponse<T>()
+        {
+            ResponseCode = (int)ApiResponseCodes.Exception,
+            ResponseType = ApiResponseCodes.Exception.ToString().ToUpper(),
+            ResponseMessage = "An error occured",
+            ResponseData = default(T),
+            Exception = ex?.Message,
+            InnerException = ex?.InnerException?.Message
         };
     }
 }

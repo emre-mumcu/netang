@@ -95,6 +95,20 @@ public partial class TokenService : ITokenService
         return tokenValidationParameters;
     }
 
+    public string CreateToken(string UserName)
+    {
+        JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+        
+        var userClaims = new List<Claim>{
+            new Claim(JwtRegisteredClaimNames.NameId, UserName)
+        };
+
+        ClaimsIdentity ci = new ClaimsIdentity(userClaims);
+
+        JwtSecurityToken token = tokenHandler.CreateJwtSecurityToken(GetSecurityTokenDescriptor(ci));
+        return tokenHandler.WriteToken(token);
+    }
+
     public string CreateToken(ClaimsIdentity UserClaims)
     {
         // var jwt = new JwtSecurityToken(issuer: "", audience: "", claims: null, notBefore: null, expires: null, signingCredentials: null);

@@ -27,7 +27,7 @@ catch (Exception ex)
         {
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsJsonAsync(Backend.App_Lib.ApiResponses.Exception(ex));
+                await context.Response.WriteAsJsonAsync(Backend.App_Lib.Common.ApiResponses.Exception(ex));
             });
         });
     }).Build().Run();

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Backend;
+namespace Backend.App_Lib.Common;
 
 public class AddHeaderAttribute : ResultFilterAttribute
 {

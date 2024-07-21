@@ -12,6 +12,8 @@ public static class ConfigureServices
 
         builder.Services._AddAppServices();
 
+        builder.Services._AddAutoMapper();
+
         builder.Services._AddDbContext<AppDbContext>();
 
         builder._AddLog4Net();

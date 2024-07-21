@@ -1,4 +1,4 @@
-﻿namespace Backend;
+﻿namespace Backend.App_Lib.Common;
 
 public class ServerInfoHeaderAttribute: AddHeaderAttribute
 {

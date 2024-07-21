@@ -32,9 +32,11 @@ public partial class AppDbContext : DbContext
 
         if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
         {
+            // Static Seeder
             modelBuilder.SeedData();
         }
 
+        // ModelBuilder Seeder
         // In order to seed the data by this way, migrations (add migration and update database) must be run
         // modelBuilder.SeedData();
     }
@@ -42,4 +44,6 @@ public partial class AppDbContext : DbContext
     public virtual DbSet<Trace> Traces => Set<Trace>();
     public virtual DbSet<State> States => Set<State>();
     public virtual DbSet<City> Cities => Set<City>();
+    public virtual DbSet<User> Users => Set<User>();
+    public virtual DbSet<Photo> Photos => Set<Photo>();
 }
