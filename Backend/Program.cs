@@ -8,14 +8,16 @@ try
 {
     var builder = await WebApplication.CreateBuilder(args)._ConfigureServicesAsync();
     var app = await builder.Build()._ConfigureAsync();
+    // Get log4net from IoC
     app.Services.GetRequiredService<ILogger<Program>>().LogInformation("Application is starting...");
     app.Run();
 }
 catch (Exception ex)
-{
-    // Manually configuring log4net
-    XmlConfigurator.Configure(LogManager.GetRepository(System.Reflection.Assembly.GetEntryAssembly()), new FileInfo("log4net.config"));
-    LogManager.GetLogger(typeof(Program)).Error("Error in Application...", ex);
+{    
+    {   // Manually configuring log4net
+        XmlConfigurator.Configure(LogManager.GetRepository(System.Reflection.Assembly.GetEntryAssembly()), new FileInfo("log4net.config"));
+        LogManager.GetLogger(typeof(Program)).Error("Error in Application...", ex);
+    }
 
     Host.CreateDefaultBuilder(args)
     .ConfigureServices(services => { services.AddControllers(); })
